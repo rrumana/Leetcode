@@ -1,4 +1,4 @@
-In this file I wil be posting C++ Leetcode Solutions. 
+In this file I wil be posting Java Leetcode Solutions. 
 
 Each solution will be in its own file with the question number on it.
 

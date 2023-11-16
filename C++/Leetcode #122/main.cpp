@@ -1,73 +1,76 @@
 #include <iostream>
-#include <iterator>
-#include <unordered_set>
-#include <random>
+#include <vector>
 
-class RandomizedSet {
+class Solution {
 public:
+    int maxProfit(std::vector<int>& prices) {
+        int profit = 0;
+        int size = prices.size();
 
-    std::unordered_set<int> set;
+        if(size == 1) return 0;
 
-    RandomizedSet() {
+        for(int i = 1; i < size; i++){
+            if(prices[i-1] < prices[i])
+                profit+=(prices[i] - prices[i-1]);
 
-    }
-    
-    bool insert(int val) {
-        if (set.find(val) == set.end()){
-            set.insert(val);
-            return true;
-        } else {
-            return false;
         }
-    }
-    
-    bool remove(int val) {
-        if (set.find(val) != set.end()){
-            set.erase(val);
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    int getRandom() {
-        srand (time(NULL));
-        int random = rand() % set.size();
-        set.insert(random);
-        std::unordered_set<int>::iterator itr = set.find(random);
-        if(itr == set.end()){
-            itr = set.begin();
-        } else {
-            itr++;
-        }
-        set.erase(random);
-        return *itr;
+
+        return profit;
     }
 };
 
 void test1() {
+    std::vector<int> input = {7,1,5,3,6,4};
+    int output = 0;
+    int expected = 7;
 
+    Solution solution;
+	output = solution.maxProfit (input);
+
+    if(output == expected) std::cout<<"Passed test 1"<<std::endl;
+	else std::cout<<"Failed test 1"<<std::endl;
 }
 
 void test2() {
+    std::vector<int> input = {1,2,3,4,5};
+    int output = 0;
+    int expected = 4;
 
+    Solution solution;
+	output = solution.maxProfit (input);
+
+    if(output == expected) std::cout<<"Passed test 2"<<std::endl;
+	else std::cout<<"Failed test 2"<<std::endl;
 }
 
 void test3() {
-    std::string s = "MCMXCIV";
+    std::vector<int> input = {7,6,4,3,1};
     int output = 0;
-    int expected = 1994;
+    int expected = 0;
 
-    RandomizedSet solution;
-	//output = solution.romanToInt (s);
+    Solution solution;
+	output = solution.maxProfit (input);
 
     if(output == expected) std::cout<<"Passed test 3"<<std::endl;
 	else std::cout<<"Failed test 3"<<std::endl;
 }
 
+void test4() {
+    std::vector<int> input = {1,5,1,6,3,1};
+    int output = 0;
+    int expected = 9;
+
+    Solution solution;
+	output = solution.maxProfit (input);
+
+    if(output == expected) std::cout<<"Passed test 4"<<std::endl;
+	else std::cout<<"Failed test 4"<<std::endl;
+}
+
 int main() {
-    //test1();
-    //test2();
-    //test3();
+    test1();
+    test2();
+    test3();
+    test4();
 	return 0;
 }

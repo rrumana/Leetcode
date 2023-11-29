@@ -1,81 +1,62 @@
-This was my first medium difficulty coding challenge, and even though this was very similar to #26, it was much harder.
-
---------------------------
-
 The instructions follow:
 
-Given an integer array nums sorted in non-decreasing order, remove some duplicates in-place such that each unique element appears at most twice. The relative order of the elements should be kept the same.
+Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
 
-Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array nums. More formally, if there are k elements after removing the duplicates, then the first k elements of nums should hold the final result. It does not matter what you leave beyond the first k elements.
+Symbol       Value
+I             1
+V             5
+X             10
+L             50
+C             100
+D             500
+M             1000
+For example, 2 is written as II in Roman numeral, just two ones added together. 12 is written as XII, which is simply X + II. The number 27 is written as XXVII, which is XX + V + II.
 
-Return k after placing the final result in the first k slots of nums.
+Roman numerals are usually written largest to smallest from left to right. However, the numeral for four is not IIII. Instead, the number four is written as IV. Because the one is before the five we subtract it making four. The same principle applies to the number nine, which is written as IX. There are six instances where subtraction is used:
 
-Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
-
-Custom Judge:
-
-The judge will test your solution with the following code:
-
-int[] nums = [...]; // Input array
-int[] expectedNums = [...]; // The expected answer with correct length
-
-int k = removeDuplicates(nums); // Calls your implementation
-
-assert k == expectedNums.length;
-for (int i = 0; i < k; i++) {
-    assert nums[i] == expectedNums[i];
-}
-If all assertions pass, then your solution will be accepted.
+I can be placed before V (5) and X (10) to make 4 and 9. 
+X can be placed before L (50) and C (100) to make 40 and 90. 
+C can be placed before D (500) and M (1000) to make 400 and 900.
+Given a roman numeral, convert it to an integer.
 
  
 
 Example 1:
+  Input: s = "III"
+  Output: 3
+  Explanation: III = 3.
 
-Input: nums = [1,1,1,2,2,3]
-Output: 5, nums = [1,1,2,2,3,_]
-Explanation: Your function should return k = 5, with the first five elements of nums being 1, 1, 2, 2 and 3 respectively.
-It does not matter what you leave beyond the returned k (hence they are underscores).
 Example 2:
+  Input: s = "LVIII"
+  Output: 58
+  Explanation: L = 50, V= 5, III = 3.
 
-Input: nums = [0,0,1,1,1,1,2,3,3]
-Output: 7, nums = [0,0,1,1,2,3,3,_,_]
-Explanation: Your function should return k = 7, with the first seven elements of nums being 0, 0, 1, 1, 2, 3 and 3 respectively.
-It does not matter what you leave beyond the returned k (hence they are underscores).
- 
+Example 3:
+  Input: s = "MCMXCIV"
+  Output: 1994
+  Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 
 Constraints:
-
-1 <= nums.length <= 3 * 104
--104 <= nums[i] <= 104
-nums is sorted in non-decreasing order.
+  1 <= s.length <= 15
+  s contains only the characters ('I', 'V', 'X', 'L', 'C', 'D', 'M').
+  It is guaranteed that s is a valid roman numeral in the range [1, 3999].
 
 ------------------------------
 
 Approach details follow:
 
-This one is just like #26 but it can have two of each instead of one.
+This one was very similar to 12
 
-We just need to iterate through this array once and delete all duplicate elements resulting in 3 or more copies, which will all be adjacent.
+I actually used a map this time though, so that is a small improvement. This solution is neither the fastest nor the most memory efficient, but it is simple and fast enough for the small implementation we make here.
 
-The hardest part for me was figuring out how to keep track of how many copies of each element are present and moving it down to 2.
+The combinations are loaded into the map and then similarly to 12 there is a loop that convets roman characters into a rolling sum one character at a time.
 
-Even though the challenge is really similar, I used a very different approach.
-
-We still create two iterators, one only used for loop iteration and one used to keep track of unique elements in the array.
-
-If the indices are equal and too close together, the leading index is iterated, otherwise the element located at the leading index is erased.
-
-The size of the array is returned because the iterators can sometimes straddle the last element if there is an odd number of elements, and so size is used instead of hard coding it like in #26. 
+There is some difference here because because we need to check if the number is being added or subtracted so we must implement a sliding window technique to check if the current item is bigger or smaller then the following one.
 
 ------------------------------
 
 Complexity details follow:
 
 Concerning the Leetcode algorithm in isolation:
-We have a linear time complexity of O(n) since we only iterate through nums of size n once. It is important to note that the .size() method for vectors takes constant time since the size value is stored.
-We have a constant space complexity since we only need to create one counting variable and add no new data structures.
-
-Concerning the file as a whole:
-We have a still linear time complexity of O(n * t) where t is a constant but generally unknown number of test cases. Since t does not scale with the size of the array, it is considered constant and does not affect worst case runtime even though with many testcases and small n values it could behave closer to (n)^2 or worse.
-There is another constant factor for the comparisons of the given and expected elements but the time complexity still simplifies down to O(n).
-We have a linear space complexity of O(n * t) because we need to use O(n) amount of space per test case. The same logic about testcase scaling applies here as well.
+We have a linear time complexity of O(n) where n is the number of character in the given string because we iterate through the string once. The map loading and lookup operations are negligible in this context.
+We have a constant space complexity because we are not creating any new items that are bound to the size of the input. We do create a map and a few variables, but they are constant with respect to the input size.

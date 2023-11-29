@@ -25,6 +25,8 @@ Approach details follow:
 
 This approach is pretty self explanatory from the code, iterate through the given array and test whether the current height is greater than the max height, if it is, then set max to current. By the end of hte loop the max variable will store the maximum net height during the bike ride.
 
+At first I didn't use the dereference for the line current += *x. This approach came from another programmer on Leetcode who was able to beat 100% of Leetcode users in memory usage. I was emulating their solution to see if I could make code that was 100% in speed and memory usage but that was too good to be true.
+
 ------------------------------
 
 Complexity details follow:

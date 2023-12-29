@@ -4,7 +4,44 @@
 class Solution {
 public:
     int longestSubarray(std::vector<int>& nums) {
-        return 0;
+        int count1=0;
+        int count2=0;
+        int sum=0;
+        bool flag = true;
+
+        for(int i=0; i<nums.size(); i++){
+            if(nums[i]==0){
+                flag = false;
+                break;
+            }
+        }
+
+        if(flag) return nums.size()-1;
+
+        for(int i=0; i<nums.size(); i++){
+            if(i==0 && nums[i]==0 || i==nums.size()-1 && nums[i]==0){
+                continue;
+            }
+            if(count1+count2>sum){
+                sum=count1+count2;
+            }
+            if(nums[i]==1){
+                count2++;
+            }
+            else if (nums[i-1]==1 && nums[i+1]==1){
+                count1=count2;
+                count2=0;
+            }
+            else {
+                count1=0;
+                count2=0;
+            }
+            
+        }
+        if(count1+count2>sum){
+                sum=count1+count2;
+            }
+        return sum;
     }
 };
 
@@ -21,7 +58,7 @@ void test1() {
 
 void test2() {
     std::vector<int> nums = {0,1,1,1,0,1,1,0,1};
-    int expected = 1;
+    int expected = 5;
 
     Solution solution;
 	int output = solution.longestSubarray(nums);

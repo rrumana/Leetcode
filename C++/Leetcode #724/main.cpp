@@ -1,10 +1,20 @@
 #include <iostream>     // std::cout
 #include <vector>       // std::vector
+#include <numeric>      // std::accumulate
 
 class Solution {
 public:
     int pivotIndex(std::vector<int>& nums) {
-        return 0;
+        int rightSum = std::accumulate(nums.begin(), nums.end(), 0);
+        int leftSum = 0;
+
+        for (int i = 0; i < nums.size(); i++) {
+            rightSum -= nums[i];
+            if (leftSum == rightSum)
+                return i;
+            leftSum += nums[i];
+        }
+        return -1;
     }
 };
 

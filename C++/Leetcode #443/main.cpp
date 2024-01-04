@@ -1,12 +1,28 @@
 #include <iostream>     // std::cout
-#include <algorithm>    // std::max / std::min
 #include <vector>       // std::vector
 
 class Solution {
 public:
     int compress(std::vector<char>& chars) {
-        chars = {'a','2','b','2','c','3'};
-        return 6;
+        int i = 0, res = 0;
+
+        while (i < chars.size()) {
+            int groupLength = 1;
+            while (i + groupLength < chars.size() && chars[i + groupLength] == chars[i]) {
+                groupLength++;
+            }
+
+            chars[res++] = chars[i];
+
+            if (groupLength > 1) {
+                for (char c : std::to_string(groupLength)) {
+                    chars[res++] = c;
+                }
+            }
+
+            i += groupLength;
+        }
+        return res;
     }
 };
 

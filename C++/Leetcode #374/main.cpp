@@ -15,7 +15,19 @@ public:
         else return 0;
     }
     int guessNumber(int num) {
-        return 6;
+        int value = num/2;
+
+        while(true){
+            if(guess(value) == -1){
+                value = value-((num-value)/2);
+            } else if(guess(value) == 1) {
+                value = value+((num-value)/2+1);
+            } else {
+                break;
+            }
+        }
+
+        return value;
     }
 };
 
@@ -24,6 +36,7 @@ void test1() {
     int expected = 6;
 
     Solution solution;
+    solution.setGuess(expected);
 	int output = solution.guessNumber(max);
 
     if(output == expected) std::cout<<"Passed test 1"<<std::endl;
@@ -35,6 +48,7 @@ void test2() {
     int expected = 1;
         
     Solution solution;
+    solution.setGuess(expected);
 	int output = solution.guessNumber(max);
 
     if(output == expected) std::cout<<"Passed test 2"<<std::endl;
@@ -46,6 +60,7 @@ void test3() {
     int expected = 1;
         
     Solution solution;
+    solution.setGuess(expected);
 	int output = solution.guessNumber(max);
 
     if(output == expected) std::cout<<"Passed test 3"<<std::endl;

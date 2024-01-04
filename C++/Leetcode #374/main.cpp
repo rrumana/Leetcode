@@ -14,20 +14,16 @@ public:
         else if (value < number) return 1;
         else return 0;
     }
-    int guessNumber(int num) {
-        int value = num/2;
+    int guessNumber(int n) {
+        long long lo = 1, hi = n, mid;
 
-        while(true){
-            if(guess(value) == -1){
-                value = value-((num-value)/2);
-            } else if(guess(value) == 1) {
-                value = value+((num-value)/2+1);
-            } else {
-                break;
-            }
+        while(lo <= hi) {
+            mid = (lo+hi) >> 1;
+            if(guess(mid) == 0) return mid;
+            if(guess(mid) == -1) hi = mid - 1;
+            else lo = mid + 1;
         }
-
-        return value;
+        return mid;
     }
 };
 

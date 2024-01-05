@@ -16,8 +16,19 @@ struct TreeNode {
 
 class Solution {
 public:
+    void getSeq(std::vector<int>& seq,TreeNode* root){
+        if(!root) return;
+        if(root->left == NULL && root->right == NULL) seq.push_back(root->val);
+        else {
+            getSeq(seq, root->left);
+            getSeq(seq, root->right);
+        }
+    }
     bool leafSimilar(TreeNode* root1, TreeNode* root2) {
-
+        std::vector<int> seq1,seq2;
+        getSeq(seq1,root1);
+        getSeq(seq2,root2);
+        return seq1==seq2;
     }
 };
 
@@ -59,12 +70,6 @@ void test1() {
     Solution solution;
 	bool output = solution.leafSimilar(root1, root2);
 
-    //std::cout<<output<<std::endl;
-
-    //displayAll(root1);
-    //std::cout<<std::endl;
-    //displayAll(root2);
-
     if(output == expected) std::cout<<"Passed test 1"<<std::endl;
 	else std::cout<<"Failed test 1"<<std::endl;
 }
@@ -80,12 +85,6 @@ void test2() {
     Solution solution;
 	bool output = solution.leafSimilar(root1, root2);
 
-    //std::cout<<output<<std::endl;
-
-    //displayAll(root1);
-    //std::cout<<std::endl;
-    //displayAll(root2);
-
     if(output == expected) std::cout<<"Passed test 2"<<std::endl;
 	else std::cout<<"Failed test 2"<<std::endl;
 }
@@ -95,6 +94,5 @@ void test3() {}
 int main() {
     test1();
     test2();
-    //test3();
 	return 0;
 }

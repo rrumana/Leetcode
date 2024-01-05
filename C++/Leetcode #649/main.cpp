@@ -5,7 +5,20 @@
 class Solution {
 public:
     std::string predictPartyVictory(std::string senate) {
+        std::queue<int> q1, q2;
+        int n = senate.length();
+        for(int i = 0; i<n; i++) {
+            if(senate[i] == 'R') q1.push(i);
+            else q2.push(i);
+        }
 
+        while(!q1.empty() && !q2.empty()){
+            int r_turn = q1.front(), d_turn = q2.front();
+            q1.pop(), q2.pop();
+            if(r_turn < d_turn) q1.push(r_turn + n);
+            else q2.push(d_turn + n);
+        }
+        return (q1.size() > q2.size())? "Radiant" : "Dire";
     }
 };
 

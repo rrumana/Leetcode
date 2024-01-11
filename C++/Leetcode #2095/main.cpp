@@ -33,12 +33,32 @@ ListNode* constructList(std::vector<int> vec, int index, int size) {
 class Solution {
 public:
     ListNode* deleteMiddle(ListNode* head) {
-        std::vector<int> Vec = {1,3,4,1,2,6};
+        if(!head) return NULL;
+        else if(!head->next) return head;
+        else if(!head->next->next) {
+            ListNode *output = head->next;
+            head->next = NULL;
+            output->next = head;
+            return output;
+        }
+        else {
+            ListNode *current = head;
+            ListNode *next = NULL;
+            ListNode *last = NULL;
 
-        ListNode *expected = constructList(Vec, 0, Vec.size());
-        return expected;
+            while(current != NULL){
+                next = current->next;
+                current->next = last;
+                last = current;
+                current = next;
+            }
+
+            current = last;
+            return current;
+        }
     }
 };
+
 
 void displayAll(ListNode* root) {
 	if(root) {

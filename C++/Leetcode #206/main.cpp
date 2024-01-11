@@ -15,29 +15,19 @@ struct ListNode {
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
-        if(!head) return NULL;
-        else if(!head->next) return head;
-        else if(!head->next->next) {
-            ListNode *output = head->next;
-            head->next = NULL;
-            output->next = head;
-            return output;
-        }
-        else {
-            ListNode *current = head;
-            ListNode *next = NULL;
-            ListNode *last = NULL;
+        ListNode *current = head;
+        ListNode *next = NULL;
+        ListNode *last = NULL;
 
-            while(current != NULL){
-                next = current->next;
-                current->next = last;
-                last = current;
-                current = next;
-            }
-
-            current = last;
-            return current;
+        while(current != NULL){
+            next = current->next;
+            current->next = last;
+            last = current;
+            current = next;
         }
+
+        current = last;
+        return current;
     }
 };
 

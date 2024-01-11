@@ -1,10 +1,40 @@
-#include <iostream>     // std::cout
-#include <vector>       // std::vector
+#include <iostream>         // std::cout
+#include <vector>           // std::vector
+#include <map>              // std::map
 
 class Solution {
 public:
     int equalPairs(std::vector<std::vector<int>>& grid) {
-        return 1;
+        std::map<std::vector<int>, int> rows;
+        std::map<std::vector<int>, int> cols;
+        int width = grid[0].size();
+        int height = grid.size();
+        int colisions = 0;
+
+        // make rows map
+        for(auto row : grid){
+            if(rows.find(row) == rows.end()) rows[row] = 1;
+            else rows[row] = rows[row] + 1;
+        }
+
+        // handle cols
+        for(int i = 0; i < width; i++) {
+            std::vector<int> col;
+            for(int j = 0; j < height; j++){
+                col.push_back(grid[j][i]);
+            }
+            if(cols.find(col) == cols.end()) cols[col] = 1;
+            else cols[col] = cols[col] + 1;
+        }
+
+        for(auto row = rows.begin(); row != rows.end(); ++row){
+            for(auto col = cols.begin(); col != cols.end(); ++col){
+                if(row->first != col->first) continue;
+                colisions += row->second * col->second;
+            }
+        }
+
+        return colisions;
     }
 };
 

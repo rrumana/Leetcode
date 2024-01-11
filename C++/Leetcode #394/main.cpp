@@ -25,8 +25,8 @@ void test2() {
     Solution solution;
 	std::string output = solution.decodeString(input);
 
-    if(output == expected) std::cout<<"Passed test 1"<<std::endl;
-	else std::cout<<"Failed test 1"<<std::endl;
+    if(output == expected) std::cout<<"Passed test 2"<<std::endl;
+	else std::cout<<"Failed test 2"<<std::endl;
 }
 
 void test3() {
@@ -36,8 +36,8 @@ void test3() {
     Solution solution;
 	std::string output = solution.decodeString(input);
 
-    if(output == expected) std::cout<<"Passed test 1"<<std::endl;
-	else std::cout<<"Failed test 1"<<std::endl;
+    if(output == expected) std::cout<<"Passed test 3"<<std::endl;
+	else std::cout<<"Failed test 3"<<std::endl;
 }
 
 int main() {

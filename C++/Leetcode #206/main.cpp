@@ -12,6 +12,35 @@ struct ListNode {
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(!head) return NULL;
+        else if(!head->next) return head;
+        else if(!head->next->next) {
+            ListNode *output = head->next;
+            head->next = NULL;
+            output->next = head;
+            return output;
+        }
+        else {
+            ListNode *current = head;
+            ListNode *next = NULL;
+            ListNode *last = NULL;
+
+            while(current != NULL){
+                next = current->next;
+                current->next = last;
+                last = current;
+                current = next;
+            }
+
+            current = last;
+            return current;
+        }
+    }
+};
+
 ListNode* newNode(int value) {
     ListNode* node = (ListNode*)malloc(sizeof(ListNode));
     node->val = value;
@@ -37,16 +66,6 @@ void displayAll(ListNode* root) {
 	}
 }
 
-class Solution {
-public:
-    ListNode* reverseList(ListNode* head) {
-        std::vector<int> Vec = {5,4,3,2,1};
-        ListNode *output = constructList(Vec, 0, Vec.size());
-        
-        return output;
-    }
-};
-
 bool areIdentical(struct ListNode *a, struct ListNode *b) {
     while (a != NULL && b != NULL) {
         if (a->val != b->val)
@@ -69,6 +88,8 @@ void test1() {
     Solution solution;
 	ListNode *output = solution.reverseList(input);
 
+    //displayAll(output);
+
     if(areIdentical(output, expected)) std::cout<<"Passed test 1"<<std::endl;
 	else std::cout<<"Failed test 1"<<std::endl;
 }
@@ -83,6 +104,8 @@ void test2() {
     Solution solution;
 	ListNode *output = solution.reverseList(input);
 
+    //displayAll(output);
+
     if(areIdentical(output, expected)) std::cout<<"Passed test 2"<<std::endl;
 	else std::cout<<"Failed test 2"<<std::endl;
 }
@@ -96,6 +119,8 @@ void test3() {
 
     Solution solution;
 	ListNode *output = solution.reverseList(input);
+
+    //displayAll(output);
 
     if(areIdentical(output, expected)) std::cout<<"Passed test 3"<<std::endl;
 	else std::cout<<"Failed test 3"<<std::endl;

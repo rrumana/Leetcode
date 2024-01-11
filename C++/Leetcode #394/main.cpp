@@ -1,10 +1,36 @@
 #include <iostream>         // std::cout
+#include <stack>            // std::stack
 
 class Solution {
 public:
-    std::string decodeString(std::string s) {
-        return "aaabcbc";
+    std::string makeString(int n, std::string s) {
+        std::string temp = "";
+        for(int i = 0; i < n; i++) temp += s;
+        return temp;
     }
+
+   std::string decodeString(std::string s) {
+      int i=0;
+      while (i < s.size()) {
+         if (s[i] != ']') {
+            i++;
+            continue;
+         }
+
+         int j = i;
+         while (s[j] != '[') j--;
+         std::string repeatLetters{ s.substr(j + 1, i - j - 1) };
+         auto k{ j };
+         j--;
+         while (j > 0 && isdigit(s[j]))
+            j--;
+         if (j != 0) j++;
+         int n = stoi(s.substr(j, k - j));
+         s.replace(j, i - j + 1, makeString(n, repeatLetters));
+         i = j + repeatLetters.size() * n;
+      }
+      return s;
+   }
 };
 
 void test1() {

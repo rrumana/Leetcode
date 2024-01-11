@@ -12,6 +12,34 @@ struct ListNode {
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
+class Solution {
+public:
+    int findMiddle(ListNode* head) {
+        ListNode *current = head;
+        int counter = 0;
+
+        while(current != NULL){
+            counter++;
+            current = current->next;
+        }
+        return counter/2;
+    }
+    ListNode* deleteMiddle(ListNode* head) {
+        if(!head) return head;
+        if(!head->next) return head->next;
+        
+        int middle = findMiddle(head);
+        ListNode *current = head;
+
+        for(int i = 1; i < middle; ++i){
+            current = current->next;
+        }
+
+        current->next = current->next->next;
+        return head;
+    }
+};
+
 ListNode* newNode(int value) {
     ListNode* node = (ListNode*)malloc(sizeof(ListNode));
     node->val = value;
@@ -30,34 +58,6 @@ ListNode* constructList(std::vector<int> vec, int index, int size) {
     return root;
 }
 
-class Solution {
-public:
-    ListNode* deleteMiddle(ListNode* head) {
-        if(!head) return NULL;
-        else if(!head->next) return head;
-        else if(!head->next->next) {
-            ListNode *output = head->next;
-            head->next = NULL;
-            output->next = head;
-            return output;
-        }
-        else {
-            ListNode *current = head;
-            ListNode *next = NULL;
-            ListNode *last = NULL;
-
-            while(current != NULL){
-                next = current->next;
-                current->next = last;
-                last = current;
-                current = next;
-            }
-
-            current = last;
-            return current;
-        }
-    }
-};
 
 
 void displayAll(ListNode* root) {
@@ -127,9 +127,43 @@ void test3() {
 	else std::cout<<"Failed test 3"<<std::endl;
 }
 
+void test4() {
+    std::vector<int> Vec1 = {1};
+    std::vector<int> Vec2 = {};
+
+    ListNode *input = constructList(Vec1, 0, Vec1.size());
+    ListNode *expected = constructList(Vec2, 0, Vec2.size());
+
+    Solution solution;
+	ListNode *output = solution.deleteMiddle(input);
+
+    displayAll(output);
+
+    if(areIdentical(output, expected)) std::cout<<"Passed test 4"<<std::endl;
+	else std::cout<<"Failed test 4"<<std::endl;
+}
+
+void test5() {
+    std::vector<int> Vec1 = {};
+    std::vector<int> Vec2 = {};
+
+    ListNode *input = constructList(Vec1, 0, Vec1.size());
+    ListNode *expected = constructList(Vec2, 0, Vec2.size());
+
+    Solution solution;
+	ListNode *output = solution.deleteMiddle(input);
+
+    displayAll(output);
+
+    if(areIdentical(output, expected)) std::cout<<"Passed test 5"<<std::endl;
+	else std::cout<<"Failed test 5"<<std::endl;
+}
+
 int main() {
     test1();
     test2();
     test3();
+    test4();
+    test5();
 	return 0;
 }

@@ -1,6 +1,6 @@
 # Leetcode
 
-This Repository is now being managed on Ubuntu VM
+This repository is now being managed on Ubuntu VM
 
 Just a collection of Leetcode questions I have done as of recent.
 

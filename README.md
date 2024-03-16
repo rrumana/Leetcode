@@ -1,4 +1,7 @@
 # Leetcode
+
+This Repository is now being managed on Ubuntu VM
+
 Just a collection of Leetcode questions I have done as of recent.
 
 Each solution will be posted with an accompanying README talking about the solution, my process, where I struggled, and the time and space complexity.

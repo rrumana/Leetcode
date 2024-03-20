@@ -1,2 +1,6 @@
 # ccls files
 .ccls-cache/
+
+# All rust target and debug directories
+**/target/
+**/debug/

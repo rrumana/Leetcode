@@ -1,6 +1,8 @@
 #include <iostream>     // std::cout
 #include <vector>       // std::vector
 #include <algorithm>    // std::max
+#include <optional>     // std::optional
+#include <cstddef>      // std::size_t
 
 /**
  * Definition for a binary tree node.
@@ -17,30 +19,22 @@ struct TreeNode {
 
 class Solution {
 public:
-int maxDepth(TreeNode* root) {
-        if(root == NULL) return 0;
+    int maxDepth(TreeNode* root) {
+        if (!root) return 0;
         int maxLeft = maxDepth(root->left);
         int maxRight = maxDepth(root->right);
-        return std::max(maxLeft, maxRight)+1;
+        return std::max(maxLeft, maxRight) + 1;
     }
 };
 
-TreeNode* newNode(int value) {
-    TreeNode* node = (TreeNode*)malloc(sizeof(TreeNode));
-    node->val = value;
-    node->left = node->right = NULL;
-    return node;
-}
-
-TreeNode* constructTree(std::vector<int> vec, int index, int size) {
-    TreeNode *root = nullptr;
-
-    if (index < size && vec[index] != 0) {
-        root = newNode(vec[index]);
-         
-        root->left = constructTree(vec, 2 * index + 1, size);
-        root->right = constructTree(vec, 2 * index + 2, size);
+TreeNode* constructTree(const std::vector<std::optional<int>>& vec, std::size_t index) {
+    if (index >= vec.size() || !vec[index].has_value()) {
+        return nullptr;
     }
+
+    TreeNode* root = new TreeNode(*vec[index]);
+    root->left = constructTree(vec, 2 * index + 1);
+    root->right = constructTree(vec, 2 * index + 2);
     return root;
 }
 
@@ -53,10 +47,10 @@ void displayAll(TreeNode* root) {
 }
 
 void test1() {
-    std::vector<int> Vec = {3,9,20,NULL,NULL,15,7};
+    std::vector<std::optional<int>> Vec = {3, 9, 20, std::nullopt, std::nullopt, 15, 7};
     int expected = 3;
 
-    TreeNode* root1 = constructTree(Vec, 0, Vec.size());
+    TreeNode* root1 = constructTree(Vec, 0);
 
     Solution solution;
 	int output = solution.maxDepth(root1);
@@ -66,10 +60,10 @@ void test1() {
 }
 
 void test2() {
-    std::vector<int> Vec = {1,NULL,2};
+    std::vector<std::optional<int>> Vec = {1, std::nullopt, 2};
     int expected = 2;
 
-    TreeNode* root1 = constructTree(Vec, 0, Vec.size());
+    TreeNode* root1 = constructTree(Vec, 0);
 
     Solution solution;
 	int output = solution.maxDepth(root1);
